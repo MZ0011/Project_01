@@ -15,13 +15,19 @@ class rotateMesh(Operator):
         scene = bpy.context.scene
         camera = bpy.context.scene.camera
         
+        fstart = bpy.context.scene.frame_start 
+        fend = bpy.context.scene.frame_end 
+
         for obj in scene.objects:
             if obj.type == 'MESH':
                 obj.select = True
-                bpy.ops.group.create()
-                bpy.ops.transform.rotate(value=6.28319, axis=(0, 0, 1),  #360
-                constraint_axis=(False, False, True), constraint_orientation='GLOBAL', mirror=False, 
-                proportional='DISABLED', proportional_edit_falloff='SMOOTH', proportional_size=1)
+                group = bpy.ops.group.create()
+                
+                obj.rotation_euler = (0, 0, 0)
+                obj.keyframe_insert(data_path="rotation_euler", frame = fstart)
+                
+                obj.rotation_euler = (0, 0, 6.28319) #360
+                obj.keyframe_insert(data_path="rotation_euler", frame = fend)
        
             else: 
                 obj.select = False
