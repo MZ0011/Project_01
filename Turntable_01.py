@@ -33,7 +33,8 @@ class rotateMesh(Operator):
                 obj.select = False
         
         bpy.ops.view3d.camera_to_view_selected()    
-           
+      
+ 
      
         return{'FINISHED'}   
     
@@ -44,8 +45,62 @@ class cameraRotate(Operator):
      
         
     def execute(self, context):
-      
+            
+        scene = bpy.context.scene
+        
+         
+        fstart = bpy.context.scene.frame_start 
+        fend = bpy.context.scene.frame_end 
+          
+        for obj in scene.objects:
+            if obj.type == 'MESH':
+                obj.select = True
+                area = bpy.context.area
+                old_type = area.type
+                area.type = 'VIEW_3D'
+                group = bpy.ops.group.create()
+                bpy.ops.object.origin_set(type='ORIGIN_CENTER_OF_VOLUME')
+                bpy.ops.view3d.snap_cursor_to_selected()
+                area.type = old_type
+               
+                 
+            else: 
+                obj.select = False
+         
+        empty = bpy.ops.object.empty_add(type='PLAIN_AXES',view_align=False)
+        
+       
+        for camera in scene.objects:
+          
+           if camera.type == 'CAMERA':
+                camera.select = True
+               
+                bpy.ops.object.parent_set(type='OBJECT', keep_transform=False)
+                
+           else:
+              camera.select = False
+          
 
+        for empty in scene.objects:
+            if empty.type == 'EMPTY':
+                empty.select = True
+
+                empty.rotation_euler = (0, 0, 0)
+                empty.keyframe_insert(data_path="rotation_euler", frame = fstart)
+
+                empty.rotation_euler = (0, 0, 6.28319) #360
+                empty.keyframe_insert(data_path="rotation_euler", frame = fend)   
+
+
+            else:
+                empty.select = False
+                
+                
+
+        camera.select = True   
+        bpy.ops.object.select_by_type(type='MESH')
+        bpy.ops.view3d.camera_to_view_selected()  
+        
         return{'FINISHED'}
 
 
