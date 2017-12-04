@@ -1,7 +1,17 @@
 import bpy
 from bpy.types import Panel, Operator
 
-
+bl_info = {  
+ "name": "Turntable",  
+ "author": "M.Z",  
+ "version": (1, 0),  
+ "blender": (2, 7, 9),  
+ "location": "Properties > Scene > Turntable",  
+ "description": "User can select to rotate either the mesh or the camera",  
+ "warning": "",  
+ "wiki_url": "",  
+ "tracker_url": "",  
+ "category": "Animation"}  
 
 
     
