@@ -40,5 +40,5 @@ Rotate Mesh :
 
 		
 Cesto softveri daju opciju ili samo rotiranje kamere ili rotiranje mesh-a. (ponekad ni to)		
-Zato su napravljene dve opcije za turtable kako bi korisnik mogao odabrati zeljeni efekat. 
+Zato su napravljene dve opcije za turntable kako bi korisnik mogao odabrati zeljeni efekat. 
 		
